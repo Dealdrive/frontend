@@ -1,6 +1,6 @@
 <template>
     <div id="wrapper">
-        <BaseModal >
+        <BaseModal :showButton=false >
             
             <h1 class="title">Login</h1>
            

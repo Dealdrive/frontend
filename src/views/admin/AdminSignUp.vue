@@ -1,12 +1,11 @@
 <template>
     <div >
-        <BaseModal>
+        <BaseModal :showButton=false>
         <h1 class="title">Register Admin</h1>
 
         <form action="">
-            <input type="text" name="" id="" placeholder="Lastname">
-            <input type="text" name="" id="" placeholder="Firstname">
-            <input type="text" name="" id="" placeholder="Middlename">
+            <input type="text" name="" id="" placeholder="Fullname">
+        
             <input type="email" name="" id="" placeholder="Email">
             <input type="Username" name="" id="" placeholder="Username">
 

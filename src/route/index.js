@@ -92,14 +92,14 @@ const routes = [{
         },
 
         {
-            path: '/Adminlogin',
+            path: '/Admin/login',
             component: Adminlogin,
             name: "Adminlogin",
 
         },
 
         {
-            path: '/AdminSignUp',
+            path: '/Admin/SignUp',
             component: AdminSignUp,
             name: "AdminSignUp",
 
