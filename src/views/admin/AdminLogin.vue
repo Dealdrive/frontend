@@ -11,26 +11,32 @@
                {{ errorMsg }}
             </span>
             <form @submit="login" method="POST">
+               
+                    <input
+                        id="email-address"
+                        name="email"
+                        type="email"
+                        autocomplete="email"
+                       
+                        v-model="user.email"
+                        placeholder="Email address"
+                        />
 
-                <input
-                    id="email-address"
-                    name="email"
-                    type="email"
-                    autocomplete="email"
-                    required=""
-                    v-model="user.email"
-                    placeholder="Email address"
-                    />
+                        <span v-if="error.email" class="danger">{{error.email}}</span>
+                
 
-                <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autocomplete="current-password"
-                    required=""
-                    v-model="user.password"
-                    placeholder="Password"
-                />
+                
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            autocomplete="current-password"
+                            
+                            v-model="user.password"
+                            placeholder="Password"
+                        />
+                        <span v-if="error.password" class="danger">{{error.password}}</span>
+                
          
                 <button type="submit" class="success">Save</button>
 
@@ -40,7 +46,7 @@
 </template>
 
 <script setup>
-
+import loginValidations from '../../services/loginValidations'
 import BaseModal from '../../components/BaseModal.vue';
 import { useRouter } from "vue-router";
 import { ref } from "vue";
@@ -57,10 +63,22 @@ const user = {
 let loading = ref(false);
 
 let errorMsg = ref("");
+let error=ref([]);
 
+// login funtion
 function login(ev) {
 
   ev.preventDefault();
+
+//   validating form
+    let validations=new loginValidations(user.email, user.password)
+    error.value=validations.checkValidations()
+
+    if('email' in error || 'password' in error){
+        return false
+    }
+
+// login
 
   loading.value = true;
 
@@ -94,17 +112,21 @@ function login(ev) {
 .success{
     background-color: green;
 }
+
+form{
+    padding: 0 1em;
+}
 form input,button{
     width: 100%;
-    margin-top: 2em;
+   
 }
 input{
-    padding: 1em;
-    
+    height: 3em;
+    margin: 2em 0;
 }
 form button{
     width: 100%;
-    margin-bottom: 2em;
+    margin-top: 2em;
     padding: .2em;
     font-size: 2rem;
 }

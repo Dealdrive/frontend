@@ -4,7 +4,7 @@
         <BaseModal :showButton=false>
             
         <h1 class="title">Register Admin</h1>
-
+    {{errorMsg}}
            <form class="mt-8" @submit="register">
 
             <div
@@ -24,6 +24,9 @@
             :errors="errors"
             placeholder="Full Name"
             />
+
+            <span class="danger" v-if="errorMsg.fullname">{{errorMsg.fullname}}</span>
+
             <input
             type="email"
             name="email"
@@ -31,6 +34,9 @@
             :errors="errors"
             placeholder="Email Address"
             />
+
+            <span class="danger" v-if="errorMsg.email">{{errorMsg.email}}</span>
+
             <input
             type="password"
             name="password"
@@ -38,13 +44,18 @@
             :errors="errors"
             placeholder="Password"
             />
+
+            <span class="danger" v-if="errorMsg.password">{{errorMsg.password}}</span>
+
+
             <input
             type="password"
             name="password_confirmation"
-            v-model="user.password_confirmation"
+            v-model="user.confirmPassword"
             :errors="errors"
             placeholder="Confirm Password"
             />
+            <span class="danger" v-if="errorMsg.confirmpassword">{{errorMsg.confirmpassword}}</span>
             
             <button type="submit" class="success">Register</button>
 
@@ -54,6 +65,8 @@
 </template>
 
 <script setup>
+import signValidations from '../../services/signUpValidation'
+
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
@@ -68,14 +81,27 @@ const user = {
   name: "",
   email: "",
   password: "",
+  confirmPassword:""
 };
 
 const loading = ref(false);
 
 const errors = ref({});
+const errorMsg =ref([])
 
 function register(ev) {
   ev.preventDefault();
+//   form validation
+let validation =new signValidations(user.name, user.email, user.password, user.confirmPassword)
+
+errorMsg.value =validation.checkValidations()
+
+
+if('fullname' in errorMsg.value || 'email' in errorMsg.value || 'password' in errorMsg.value || 'confirmpassword' in errorMsg.value){
+    return false
+}
+
+// signUp Registration
   loading.value = true;
   store
     .dispatch("register", user)
