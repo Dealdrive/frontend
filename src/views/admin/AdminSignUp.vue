@@ -4,7 +4,7 @@
         <BaseModal :showButton=false>
             
         <h1 class="title">Register Admin</h1>
-    {{errorMsg}}
+    
            <form class="mt-8" @submit="register">
 
             <div
@@ -97,7 +97,7 @@ let validation =new signValidations(user.name, user.email, user.password, user.c
 errorMsg.value =validation.checkValidations()
 
 
-if('fullname' in errorMsg.value || 'email' in errorMsg.value || 'password' in errorMsg.value || 'confirmpassword' in errorMsg.value){
+if(errorMsg.value.fullname || errorMsg.value.email || errorMsg.value.password ||  errorMsg.value.confirmpassword){
     return false
 }
 

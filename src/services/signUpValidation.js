@@ -26,6 +26,9 @@ class signUpValidation{
             error={...error, password:"Password is require"}
         }
 
+        else if (!Validator.validatePasswordLength(this.password, 6)) {
+            error={...error, password:"Password  require length 6 character"}
+        }
         
 
         if(!Validator.validateConfirmPassword(this.password,this.confirmpassword)){

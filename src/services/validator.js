@@ -28,6 +28,13 @@ class Validator{
         }
         return true
     }
+
+    static validatePasswordLength(password, minLength){
+        if (password.length < minLength) {
+            return false
+        }
+        return true
+    }
 }
 
 export default Validator
