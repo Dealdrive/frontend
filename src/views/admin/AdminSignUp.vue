@@ -28,7 +28,7 @@
             <span class="danger" v-if="errorMsg.fullname">{{errorMsg.fullname}}</span>
 
             <input
-            type="email"
+            type="text"
             name="email"
             v-model="user.email"
             :errors="errors"
