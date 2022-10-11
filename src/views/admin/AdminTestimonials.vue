@@ -1,6 +1,33 @@
 <template>
     <div>
-        <h1>Testimonials section</h1>
+       <div class="d-flex flex-row justify-content-between">
+
+            <h1 class="section-title">Testimonials Section</h1>
+
+            <button class="info bg-primary text-white border-0 px-4 mb-2" @click="toggleModal(0)">Create Testimonial</button>
+            
+            <BaseModal v-if="showModal && currentModalIndex == 0" @closeModal="toggleModal(0)">
+
+                <h1 class="title">Create Testimonial</h1>
+
+                <form id="createTestimonial" @submit="createData">
+
+                    <input name="image" type="file" accept="image/*"  placeholder="Choose image" @change="handleFileUpload( $event )">
+                            
+                    <input name="star" type="number" placeholder="rating from 1 to 5">
+
+                    <input name="title" type="text" placeholder="Title">
+
+                    <input name="author" type="text" placeholder="Author">
+
+                    <textarea name="description" id="" cols="30" rows="10" placeholder="Main Description"></textarea>
+
+                    <button type="submit" class="success">Save</button>
+
+                </form>
+
+            </BaseModal>
+        </div>
          <table style="width:100%">
             <tr>
                 <th>Id</th>
@@ -12,84 +39,140 @@
                 <th>Actions</th>
             </tr>
 
-            <tr>
-                <td>1</td>
-                <td>5</td>
+            <tr v-for="testimonial in testimonials" :key="testimonial.id">
+                <td>{{testimonial.id}}</td>
+                <td>{{testimonial.star}} / 5</td>
 
-                <td>Scribe, The Mathics</td>
-                <td>Abasiofon Peter</td>
-                <td>Thank you Dealdrive technology. You did a great job and your service delivery is quite commendable.</td>
-                <td><img style="width:100px; hieght:100px" src="/assets/images/mathics.jpeg" alt=""></td>
+                <td>{{testimonial.title}}</td>
+                <td>{{testimonial.author}}</td>
+                <td>{{testimonial.description}}</td>
+                <td><img style="width:100px; hieght:100px" :src="testimonial.image" :alt="testimonial.author + ' Image'"></td>
                 <td>
                    <div class="button-section">
-                        <button class="info" @click="toggleModal">Edit</button>
-                        <button class="danger" >Delete</button>
+                        <button class="info" @click="toggleModal(testimonial.id)">Edit</button>
+                        <button class="danger" @click="deleteData(testimonial.id)">Delete</button>
                      </div> 
                 </td>
+                <BaseModal v-if="showModal && currentModalIndex == testimonial.id" @closeModal="toggleModal(testimonial.id)">
+
+                    <h1 class="title">Edit Testimonial {{ testimonial.author }}</h1>
+
+                    <form id="updateTestimonial" @submit="updateData(testimonial.id)">
+
+                        <img :src="testimonial.image" alt="Current Image" width="100" height="100">
+
+                        <input name="image" type="file" accept="image/*"  placeholder="Choose image" @change="handleFileUpload( $event )">
+                                
+                        <input name="star" type="number" placeholder="Rating from 1 to 5" :value="testimonial.star">
+
+                        <input name="title" type="text" placeholder="Title" :value="testimonial.title">
+
+                        <input name="author" type="text" placeholder="Author" :value="testimonial.author">
+
+                        <textarea name="description" id="" cols="30" rows="10" placeholder="Main Description" :value="testimonial.description"></textarea>
+
+                        <button type="submit" class="success">Save</button>
+
+                    </form>
+
+                </BaseModal>
             </tr>
-
-
-            <tr>
-                <td>1</td>
-                <td>5</td>
-
-                <td>Business Owner</td>
-                <td>David Offiong</td>
-                <td>Your services are top-notch bro I love how organized it is And yes the designs are superb! Well done!</td>
-                <td><img style="width:100px; hieght:100px" src="/assets/images/moses.jpeg" alt=""></td>
-                <td>
-                   <div class="button-section">
-                        <button class="info" @click="toggleModal">Edit</button>
-                        <button class="danger" >Delete</button>
-                     </div> 
-                </td>
-            </tr>
-
-
             
 
         </table>
-
-        <BaseModal v-show="showModal" @closeModal="toggleModal">
-            <h1 class="title">Testimonials Edit Form</h1>
-
-            <form action="">
-                <input type="file" placeholder="Chose image">
-                <input type="text" placeholder="Star">
-                <input type="text" placeholder="Id">
-                <input type="text" placeholder="Title">
-                <input type="text" placeholder="Author">
-                
-
-                <textarea name="" id="" cols="30" rows="10" placeholder="Main Description"></textarea>
-
-                <button type="submit" class="success">Save</button>
-            </form>
-        </BaseModal>
     </div>
 </template>
 
-<script>
-    import {ref} from 'vue'
+
+
+<script setup>
+
+import {computed, ref} from 'vue'
+import { useStore } from 'vuex';
 import BaseModal from '../../components/BaseModal.vue';
-    export default {
-        setup(){
-            let showModal=ref(false)
 
-            function toggleModal() {
-                showModal.value = !showModal.value
-                console.log(showModal)
-            }
+const store = useStore();
 
-            return{
-                showModal,
-                toggleModal
-            }
-        },
-       components:{
-        BaseModal
-       } 
+const testimonials = computed(() => {
+    return store.state.testimonials;
+});
+
+store.dispatch('getData', 'testimonials');
+
+
+let showModal=ref(false);
+
+let currentModalIndex = ref(null);
+
+
+function handleFileUpload(event){
+    testimonial.image = event.target.files[0];
+}
+
+
+function toggleModal(id) {
+
+    currentModalIndex.value = id;
+
+    showModal.value = !showModal.value;
+
+    // console.log(showModal, currentModalIndex.value);
+
+}
+
+function deleteData(id){
+
+    store.dispatch('deleteData', `deleteTestimonial/${id}`)
+        .then((data) => {
+            console.log(data, ' data ');
+        }).catch((e) => {
+            console.log(e);
+        });
+}
+
+function createData(e){
+
+    e.preventDefault();
+
+    const form = document.querySelector('form#createTestimonial');
+    
+    let formData = new FormData(form);
+
+    const data = {
+        key: 'createTestimonial',
+        payload: formData
     }
+
+    store.dispatch('postFormData', data)
+        .then((data) => {
+            console.log(data, ' data ');
+        }).catch((e) => {
+            console.log(e);
+        });
+
+}
+
+function updateData(id){
+
+    const form = document.querySelector('form#updateTestimonial');
+    
+    let formData = new FormData(form);
+
+    const data = {
+        key: `updateTestimonial/${id}`,
+        payload: formData
+    }
+
+    store.dispatch('updateFormData', data)
+        .then((data) => {
+            console.log(data, ' data ');
+        }).catch((e) => {
+            console.log(e);
+        });
+
+}
+
+
 </script>
 
 <style scoped>

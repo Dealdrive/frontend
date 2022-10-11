@@ -47,8 +47,9 @@ const services = computed(() => {
   return store.state.services;
 });
 
-store.dispatch('getData', 'services');
-
+store.dispatch('getData', 'services').then((data) => {
+    console.log(data, ' data ');
+});
 
 </script>
 

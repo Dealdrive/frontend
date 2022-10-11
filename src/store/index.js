@@ -14,44 +14,44 @@ const adminnavigation = [
 
     { name: 'Projects', to: { name: 'AdminProjects' }, icon: 'fa fa-archive fa-2x', color: { color: 'skyblue' } },
 
-   
-    { name: 'Blog', to: { name: 'AdminBlog' }, icon:'fa fa-sliders fa-2x', color:{color:'orange'}},
 
-    { name: 'FAQ', to: { name: 'AdminFaq' },icon:'fa fa-envelope-square fa-2x', color:{color:'green'}},
-    
+    { name: 'Blog', to: { name: 'AdminBlog' }, icon: 'fa fa-sliders fa-2x', color: { color: 'orange' } },
+
+    { name: 'FAQ', to: { name: 'AdminFaq' }, icon: 'fa fa-envelope-square fa-2x', color: { color: 'green' } },
+
 ]
 
 const slides = [{
-        id: 0,
+        id: 1,
         title: 'GET MORE DONE WITH OUR SOFTWARE SOLUTIONS',
         caption: 'Accelerate your digital transformation with our branding and software development solutions',
         image: '/assets/images/hero-carousel/1.jpg'
     },
     {
-        id: 1,
+        id: 2,
         title: 'Particpate in Our Training',
         caption: 'Dealdrive Technology Skillup programs is a digital skill acquisition program that train you to be master of tech related skills in the field of design, software and web application',
         image: '/assets/images/page-header.jpg'
     },
     {
-        id: 2,
+        id: 3,
         title: 'GET MORE DONE WITH OUR SOFTWARE SOLUTIONS',
         caption: 'Accelerate your digital transformation with our branding and software development solutions',
         image: '/assets/images/hero-carousel/2.jpg'
     },
     {
-        id: 3,
+        id: 4,
         title: 'GET MORE DONE WITH OUR SOFTWARE SOLUTIONS',
         caption: 'Accelerate your digital transformation with our branding and software development solutions',
         image: '/assets/images/hero-carousel/3.jpg'
     },
     {
-        id: 4,
+        id: 5,
         title: 'GET MORE DONE WITH OUR SOFTWARE SOLUTIONS',
         caption: 'Accelerate your digital transformation with our branding and software development solutions',
         image: '/assets/images/hero-carousel/4.jpg'
     }, {
-        id: 5,
+        id: 6,
         title: 'GET MORE DONE WITH OUR SOFTWARE SOLUTIONS',
         caption: 'Accelerate your digital transformation with our branding and software development solutions',
         image: '/assets/images/hero-carousel/5.jpg'
@@ -68,6 +68,7 @@ const socials = [
 const contacts = { email: 'dealdrivetechnology@gmail.com', phone: '+2348061467293' };
 
 const about = {
+    id: 1,
     image: "/assets/images/about.jpg",
     heading: 'Dealdrive Technology - your one-stop shop for your digital solution',
     short_desc: 'We believe there is a software solution to every hard craked experience in a brand. What we do is to ease the experience.',
@@ -79,7 +80,15 @@ const about = {
     ]
 };
 
-const categories = [{ name: 'Web Apps', id: 1, class: ".filter-web" }, { name: 'Brand Designs', id: 2, class: ".filter-brand" }];
+const categories = [
+    { name: 'Web Apps', id: 1, class: ".filter-web" },
+    { name: 'Brand Designs', id: 2, class: ".filter-brand" }
+];
+
+const project_categories = [
+    { name: 'Web Apps', id: 1, class: "filter-web" },
+    { name: 'Brand Designs', id: 2, class: "filter-brand" }
+];
 
 const projects = [{
         id: 1,
@@ -170,18 +179,18 @@ const projects = [{
 ];
 
 const services = [
-    { image: "/assets/images/BRANDING.jpeg", title: "Branding", short_desc: "Our branding services is focused on to key areas of brand: Awareness and strategy. We make design that promote your awareness. We developed strategic road map to revamp your brand.", description: "Our branding services is focused on to key areas of brand: Awareness and strategy. We make design that promote your awareness. We developed strategic road map to revamp your brand. Features and benefit: Mobile: a  well design brand is mobile. Your customer carry you around. Memorable: when your customer remember an experience with your brand it is visual that the remember. Story: we provide design that help you tell stories that relate to your audience." },
+    { id: 1, image: "/assets/images/BRANDING.jpeg", title: "Branding", short_desc: "Our branding services is focused on to key areas of brand: Awareness and strategy. We make design that promote your awareness. We developed strategic road map to revamp your brand.", description: "Our branding services is focused on to key areas of brand: Awareness and strategy. We make design that promote your awareness. We developed strategic road map to revamp your brand. Features and benefit: Mobile: a  well design brand is mobile. Your customer carry you around. Memorable: when your customer remember an experience with your brand it is visual that the remember. Story: we provide design that help you tell stories that relate to your audience." },
 
-    { image: "/assets/images/web.jpeg", title: "Websites", short_desc: "We design and build web applicartion for various use cases. Features and benefit: Responsiveness: your website can be easily accessible on different devices of your users.", description: "We design and build web applicartion for various use cases. Features and benefit: Responsiveness: your website can be easily accessible on different devices of your users. Hight conversion: the goal is to make sure your have a return investment. We built the website with features with feature that enhance high sales conversion Security: we guarantee your full security. We make sure your users privacy is well protect. Support: we dont live you hanging. We provide you 24/7 support to ensure quality customer service" },
+    { id: 2, image: "/assets/images/web.jpeg", title: "Websites", short_desc: "We design and build web applicartion for various use cases. Features and benefit: Responsiveness: your website can be easily accessible on different devices of your users.", description: "We design and build web applicartion for various use cases. Features and benefit: Responsiveness: your website can be easily accessible on different devices of your users. Hight conversion: the goal is to make sure your have a return investment. We built the website with features with feature that enhance high sales conversion Security: we guarantee your full security. We make sure your users privacy is well protect. Support: we dont live you hanging. We provide you 24/7 support to ensure quality customer service" },
 
-    { image: "/assets/images/software.jpeg", title: "Custom Application", short_desc: "We build App for mobile, Desktop and other custom device", description: "We build App for mobile, Desktop and other custom device" },
+    { id: 3, image: "/assets/images/software.jpeg", title: "Custom Application", short_desc: "We build App for mobile, Desktop and other custom device", description: "We build App for mobile, Desktop and other custom device" },
 ];
 
 const news = { title: "Particpate in Our Training", description: "Dealdrive Technology Skillup programs is a digital skill acquisition program that train you to be master of tech related skills in the field of design, software and web application" };
 
 const testimonials = [
-    { star: "5", id: "0", image: "/assets/images/mathics.jpeg", author: "Abasiofon Peter", title: "Scribe, The Mathics", description: "Thank you Dealdrive technology. You did a great job and your service delivery is quite commendable." },
-    { star: "5", id: "1", image: "/assets/images/moses.jpeg", author: "David Offiong", title: "Business Owner", description: "Your services are top-notch bro I love how organized it is And yes the designs are superb! Well done!" },
+    { star: "5", id: "1", image: "/assets/images/mathics.jpeg", author: "Abasiofon Peter", title: "Scribe, The Mathics", description: "Thank you Dealdrive technology. You did a great job and your service delivery is quite commendable." },
+    { star: "5", id: "2", image: "/assets/images/moses.jpeg", author: "David Offiong", title: "Business Owner", description: "Your services are top-notch bro I love how organized it is And yes the designs are superb! Well done!" },
 ];
 
 const contactus = { email1: "torwisdom4@gmail.com", email2: "dealdrivetechnology@gmail.com", phone1: "+2348182041899", phone2: "+2348061467293", address: "81 Itu road, Uyo, Akwa Ibom, Nigeria" };
@@ -435,6 +444,7 @@ const store = createStore({
         attendants,
         about,
         categories,
+        project_categories,
         projects,
         services,
         news,
@@ -461,6 +471,7 @@ const store = createStore({
             return response.data;
 
         },
+
         login: async({ commit }, data) => {
 
             const response = await axiosClient.post('/login', data);
@@ -478,16 +489,82 @@ const store = createStore({
             commit('logout');
 
             return response.data;
+
         },
 
         getData: async({ commit }, key) => {
 
             const response = await axiosClient.get(`/${key}`);
 
-            commit('setData', response.data, key);
+            let result = response.data;
+
+            if (response.data.message == "Sorry No Data...") {
+
+                result = store.state[key];
+
+            }
+
+            // console.log(response.data, result)
+
+            const data = {
+                response: result,
+                key
+            }
+
+            commit('setData', data);
+
+            return result;
+
+        },
+
+        postData: async({ commit }, { key, payload }) => {
+
+            const response = await axiosClient.post(`${key}`, payload);
+
+
+            // commit('setService', response.data, key);
+
+
+            return response.data;
+        },
+
+        postFormData: async({ commit }, { key, payload }) => {
+
+            const response = await axiosClient.post(`${key}`, payload, {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            });
+
+            // console.log(response, ' response ');
+
+            // commit('setData', key, response.data);
+
+            return response.data;
+        },
+
+        updateFormData: async({ commit }, { key, payload }) => {
+
+            const response = await axiosClient.put(`${key}`, payload, {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            });
+
+            // console.log(response, ' response ');
+
+            // commit('setData', key, response.data);
+
+            return response.data;
+        },
+
+        deleteData: async({ commit }, key) => {
+
+            const response = await axiosClient.delete(`${key}`);
 
             return response.data;
         }
+
     },
     mutations: {
         logout: (state) => {
@@ -495,8 +572,9 @@ const store = createStore({
             state.user.data = {};
             sessionStorage.removeItem("TOKEN");
         },
-        setData: (state, data, key) => {
-            state[key] = data;
+        setData: (state, { response, key }) => {
+            // console.log(response, key);
+            state[key] = response;
         },
         setUserData: (state, { data, token }) => {
             state.user.data = data;

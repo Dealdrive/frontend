@@ -8,7 +8,7 @@ const about = computed(() => {
   return store.state.about;
 });
 
-store.dispatch('getData', 'about');
+store.dispatch('getData', 'about').then((data) => console.log(data, ' here '));
 
 
 </script>

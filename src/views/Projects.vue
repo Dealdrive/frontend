@@ -13,6 +13,8 @@ const projects = computed(() => {
   return store.state.projects;
 });
 
+store.dispatch('getData', 'projects').then((data) => console.log(data));
+
 const route = useRoute();
 
 

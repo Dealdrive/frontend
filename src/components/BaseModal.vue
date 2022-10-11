@@ -1,6 +1,6 @@
 <template>
     <!-- <Teleport to="body"> -->
-        <div id="modal">
+        <div class="modal">
         <div class="modal-content">
             <div v-show="showButton">
                 
@@ -8,8 +8,6 @@
             </div>
             <slot ></slot>
 
-            
-            
         </div>
     </div>
     <!-- </Teleport> -->
@@ -31,7 +29,7 @@
 </script>
 
 <style scoped>
-#modal{
+.modal{
     position: absolute;
     top: 0;
     left: 0;

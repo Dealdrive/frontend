@@ -1,6 +1,25 @@
 <template>
     <div>
-        <h1>FAQ section</h1>
+         <div class="d-flex flex-row justify-content-between">
+            <h1 class="section-title">FAQ Section</h1>
+            <button class="info bg-primary text-white border-0 px-4 mb-2" @click="toggleModal(0)">Create FAQ</button>
+            
+            <BaseModal v-if="showModal && currentModalIndex == 0" @closeModal="toggleModal(0)">
+
+                <h1 class="title">Create FAQ</h1>
+
+                <form id="createFAQ" @submit="createData">
+                    
+                    <textarea name="question" id="" cols="30" rows="10" placeholder="Question"></textarea>
+
+                    <textarea name="answer" id="" cols="30" rows="10" placeholder="Answer"></textarea>
+
+                    <button type="submit" class="success">Save</button>
+
+                </form>
+
+            </BaseModal>
+        </div>
         <table style="width:100%">
             <tr>
                 <th>Id</th>
@@ -9,78 +28,125 @@
                 <th>Actions</th>
             </tr>
 
-            <tr>
-                <td>0</td>
-                <td>How much will it cost to design and build my website?</td>
+            <tr v-for="faq in faqs" :key="faq.id">
+                <td>{{ faq.id }}</td>
+                <td>{{ faq.question }}</td>
 
-                <td>Each business's needs are different, so due to variations in scope, pricing from one app development to the next can be quite different. Our typical end-to-end app development costs N100,000-N100,000,000. If you’d like a more detailed breakdown of the pricing, request for a quote to get a copy of our pricing sheet.</td>
+                <td>{{ faq.answer }}</td>
 
-                
                 <td>
                    <div class="button-section">
-                        <button class="info" @click="toggleModal">Edit</button>
-                        <button class="danger" >Delete</button>
+                        <button class="info" @click="toggleModal(faq.id)">Edit</button>
+                        <button class="danger" @click="deleteData(faq.id)">Delete</button>
                      </div> 
                 </td>
-            </tr>
+                <BaseModal v-if="showModal && currentModalIndex == faq.id" @closeModal="toggleModal(faq.id)">
+                    
+                    <h1 class="title">FAQ Edit Form </h1>
 
-            <tr>
-                <td>1</td>
-                <td>Why do i need a custom application?</td>
+                    <form id="updateFAQ" @submit="updateData(faq.id)">
 
-                <td>Custom applications can be a web app that runs on the browser or software that can be install to run to on your device. Building a custom application is dependent on the use case. You may want to build a custom app for your production system, to help you maintain a consistent product. You may want to build a sales app for your sales team.</td>
+                        <textarea name="question" id="" cols="30" rows="10" placeholder="Question" :value="faq.question"></textarea>
 
-                
-                <td>
-                   <div class="button-section">
-                        <button class="info" @click="toggleModal">Edit</button>
-                        <button class="danger" >Delete</button>
-                     </div> 
-                </td>
+                        <textarea name="answer" id="" cols="30" rows="10" placeholder="Answer" :value="faq.answer"></textarea>
+
+                        <button type="submit" class="success">Save</button>
+
+                    </form>
+
+                </BaseModal>
             </tr>
 
         </table>
 
-        <BaseModal v-show="showModal" @closeModal="toggleModal">
-            <h1 class="title">FAQ Edit Form</h1>
-
-            <form action="">
-                
-                <input type="text" placeholder="Id">
-                
-
-                <textarea name="" id="" cols="30" rows="10" placeholder="Question"></textarea>
-
-                <textarea name="" id="" cols="30" rows="10" placeholder="Answer"></textarea>
-
-                <button type="submit" class="success">Save</button>
-            </form>
-        </BaseModal>
+        
     </div>
 </template>
 
-<script>
-    import {ref} from 'vue'
+<script setup>
+
+import {computed, ref} from 'vue'
+import { useStore } from 'vuex';
 import BaseModal from '../../components/BaseModal.vue';
-    export default {
-        setup(){
-            let showModal=ref(false)
 
-            function toggleModal() {
-                showModal.value = !showModal.value
-                
-            }
+const store = useStore();
 
-            return{
-                showModal,
-                toggleModal
-            }
-        },
-       components:{
-        BaseModal
-       } 
+const faqs = computed(() => {
+    return store.state.faqs;
+});
+
+store.dispatch('getData', 'faqs');
+
+
+let showModal=ref(false);
+
+let currentModalIndex = ref(null);
+
+function toggleModal(id) {
+
+    currentModalIndex.value = id;
+
+    showModal.value = !showModal.value;
+
+    // console.log(showModal, currentModalIndex.value);
+
+}
+
+function deleteData(id){
+
+    store.dispatch('deleteData', `deleteFAQ/${id}`)
+        .then((data) => {
+            console.log(data, ' data ');
+        }).catch((e) => {
+            console.log(e);
+        });
+}
+
+function createData(e){
+
+    e.preventDefault();
+
+    const form = document.querySelector('form#createFAQ');
+    
+    let formData = new FormData(form);
+
+    const data = {
+        key: 'createFAQ',
+        payload: formData
     }
+
+    store.dispatch('postFormData', data)
+        .then((data) => {
+            console.log(data, ' data ');
+        }).catch((e) => {
+            console.log(e);
+        });
+
+}
+
+function updateData(id){
+
+    const form = document.querySelector('form#updateFAQ');
+    
+    let formData = new FormData(form);
+
+    const data = {
+        key: `updateFAQ/${id}`,
+        payload: formData
+    }
+
+    store.dispatch('updateFormData', data)
+        .then((data) => {
+            console.log(data, ' data ');
+        }).catch((e) => {
+            console.log(e);
+        });
+
+}
+
+
 </script>
+
 
 <style scoped>
 

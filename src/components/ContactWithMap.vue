@@ -61,7 +61,7 @@
 
         </div>
 
-       <form ref="contact_form" @submit.prevent="sendEmail" class="send">
+       <form ref="contact_form" @submit.prevent="postData" class="send">
             <div class="row">
               <div class="col-md-6 form-group">
                 <input v-model="form.user_name" type="text" name="user_name" class="form-control" id="name" placeholder="Your Name" required>
@@ -69,6 +69,9 @@
               <div class="col-md-6 form-group mt-3 mt-md-0">
                 <input v-model="form.user_email" type="email" class="form-control" name="user_email" id="email" placeholder="Your Email" required>
               </div>
+            </div>
+            <div class="form-group mt-3">
+              <input v-model="form.phone" type="text" class="form-control" name="phone" id="phone" placeholder="Phone" required>
             </div>
             <div class="form-group mt-3">
               <input v-model="form.subject" type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
@@ -112,10 +115,33 @@ const form = {
     user_email: '',
     subject: '',
     message: '',
+    phone: '',
     service_id: "service_0ltiw1g",
     template_id: "dealdrive_0fpecbe",
     user_id: "84Cf-v4RU4LGcbfYz"
 };
+
+const postData = () => {
+  const data = {
+    payload: {
+      name: form.user_name,
+      email: form.user_email,
+      subject: form.subject,
+      message: form.message,
+      phone: form.phone
+    },
+    key: 'contacts'
+  }
+
+  store.dispatch('postData', data)
+  .then((data) => {
+    sendEmail();
+    console.log(data);
+  })
+  .catch((e) => {
+    console.log(e);
+  });
+}
 
 const sendEmail = () => {
     emailjs.sendForm(form.service_id, form.template_id, contact_form.value, form.user_id)
@@ -126,11 +152,7 @@ const sendEmail = () => {
         }, (error) => {
             alert("Your mail was not sent successfully. Reach out to me dealdrivetechnology@gmail.com instead. Thanks.")
         });
-    } 
-
-
-
-
+} 
 
 
 </script>

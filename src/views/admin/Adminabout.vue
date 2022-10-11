@@ -1,7 +1,10 @@
 <template>
     <div>
-        <h1>About section</h1>
-        
+        <div class="d-flex flex-row justify-content-between">
+
+            <h1 class="section-title">About Us Section</h1>
+
+        </div>
 
         <table style="width:100%">
             <tr>
@@ -13,62 +16,121 @@
             </tr>
 
             <tr>
-                <td>Dealdrive Technology - your one-stop shop for your digital solution</td>
-                <td>We believe there is a software solution to every hard craked experience in a brand. What we do is to ease the experience.</td>
+                <td>{{about.heading}}</td>
+                <td>{{about.short_desc}}</td>
+                <td>
+                    <p v-for="list in about.list" :key="list">
+                        {{ list }}
+                    </p>
+                </td>
+                
 
-                <td>"We build custom applications that will optimize your daily business operations.</td>
-
-                <td><img style="width:100px; hieght:100px" src="/assets/images/about.jpg" alt=""></td>
+                <td><img style="width:100px; hieght:100px" :src="about.image" alt="About us image"></td>
                 <td>
                    <div class="button-section">
-                        <button class="info" @click="toggleModal">Edit</button>
-                        <button class="danger" >Delete</button>
+                        <button class="info" @click="toggleModal(about.id)">Edit</button>
+                        <button class="danger" @click="deleteData(about.id)">Delete</button>
                      </div> 
                 </td>
+                <BaseModal v-if="showModal && currentModalIndex == about.id" @closeModal="toggleModal(about.id)">
+                    <h1 class="title">About Us Edit Form </h1>
+
+                    <form id="updateAboutUs" @submit="updateData(about.id)">
+                        
+                        <img :src="about.image" alt="Current Slide Image" width="100" height="100">
+
+                        <input name="image" type="file" accept="image/*"  placeholder="Choose image" @change="handleFileUpload( $event )">
+                        
+                        <input name="heading" type="text" placeholder="About Heading" :value="about.heading">
+                        
+                        <input name="short_desc" type="text" placeholder="Short description" :value="about.short_desc">
+
+                        <textarea v-for="(list,index) in about.list" :key="list" :name="'list_'+index+1" id="" cols="30" rows="10" :placeholder="'List ' +index+1" :value="list"></textarea>
+
+                        <button type="submit" class="success">Save</button>
+
+                    </form>
+                </BaseModal>
             </tr>
 
             
         </table>
 
 
-        <BaseModal v-show="showModal" @closeModal="toggleModal">
-            <h1 class="title">About edit form</h1>
-
-            <form action="">
-                <input type="file" placeholder="Chose image">
-                <input type="text" placeholder="About Heading">
-                <input type="text" placeholder="Short description">
-
-                <textarea name="" id="" cols="30" rows="10" placeholder="Main content list"></textarea>
-
-                <button type="submit" class="success">Save</button>
-            </form>
-        </BaseModal>
+        
     </div>
 </template>
 
-<script>
-import {ref} from 'vue'
+
+<script setup>
+
+import {computed, ref} from 'vue'
+import { useStore } from 'vuex';
 import BaseModal from '../../components/BaseModal.vue';
-    export default {
-        setup(){
-            let showModal=ref(false)
 
-            function toggleModal() {
-                showModal.value = !showModal.value
-                console.log(showModal)
-            }
+const store = useStore();
 
-            return{
-                showModal,
-                toggleModal
-            }
-        },
-       components:{
-        BaseModal
-       } 
+const about = computed(() => {
+    return store.state.about;
+});
+
+store.dispatch('getData', 'about');
+
+
+let showModal=ref(false);
+
+let currentModalIndex = ref(null);
+
+
+function handleFileUpload(event){
+    about.image = event.target.files[0];
+}
+
+
+function toggleModal(id) {
+
+    currentModalIndex.value = id;
+
+    showModal.value = !showModal.value;
+
+    // console.log(showModal, currentModalIndex.value);
+
+}
+
+function deleteData(id){
+
+    store.dispatch('deleteData', `deleteAboutUs/${id}`)
+        .then((data) => {
+            console.log(data, ' data ');
+        }).catch((e) => {
+            console.log(e);
+        });
+}
+
+
+function updateData(id){
+
+    const form = document.querySelector('form#updateAboutUs');
+    
+    let formData = new FormData(form);
+
+    const data = {
+        key: `updateAboutUs/${id}`,
+        payload: formData
     }
+
+    store.dispatch('updateFormData', data)
+        .then((data) => {
+            console.log(data, ' data ');
+        }).catch((e) => {
+            console.log(e);
+        });
+
+}
+
+
 </script>
+
 
 <style scoped>
 input::placeholder{

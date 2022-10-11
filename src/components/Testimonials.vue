@@ -10,23 +10,24 @@
 
         <!-- Indicators/dots -->
         <div class="carousel-indicators">
-            <button v-for="testimonial in testimonials" :key="testimonial.id" type="button" data-bs-target="#demo" :data-bs-slide-to="testimonial.id" :class="testimonial.id == 0 ? 'active' : 'not-active'"></button>
+            <button v-for="testimonial in testimonials" :key="testimonial.id" type="button" data-bs-target="#demo" :data-bs-slide-to="testimonial.id" :class="testimonial.id == 1 ? 'active' : 'not-active'"></button>
         </div>
         
         <!-- The slideshow/carousel -->
             <div class="carousel-inner">
-                <div v-for="testimonial in testimonials" :key="testimonial.id" :class="[testimonial.id == 0 ? 'active':'not-active' ,'carousel-item pt-3']">
-                    <img class="rounded-circle shadow-1-strong mb-4"
+                <div v-for="testimonial in testimonials" :key="testimonial.id" :class="[testimonial.id == 1 ? 'active':'not-active' ,'carousel-item pt-3']">
+                    <img 
+                        class="rounded-circle shadow-1-strong mb-4"
                         :src="testimonial.image" alt="avatar"
                         style="width: 150px; height: 150px;" />
                     <div class="row d-flex justify-content-center">
                         <div class="col-lg-8">
-                        <h5 class="mb-3">{{testimonial.author}}</h5>
-                        <p>{{testimonial.title}}</p>
-                        <p class="text-muted">
-                            <i class="fas fa-quote-left pe-2"></i>
-                            {{testimonial.description}}
-                        </p>
+                            <h5 class="mb-3">{{testimonial.author}}</h5>
+                            <p>{{testimonial.title}}</p>
+                            <p class="text-muted">
+                                <i class="fas fa-quote-left pe-2"></i>
+                                {{testimonial.description}}
+                            </p>
                         </div>
                     </div>
                     <ul class="list-unstyled d-flex justify-content-center text-warning mb-0">
