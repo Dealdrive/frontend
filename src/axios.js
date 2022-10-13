@@ -3,7 +3,7 @@ import axios from "axios";
 import store from "./store";
 
 const axiosClient = axios.create({
-    baseURL: "http://dealdrive.test/api/"
+    baseURL: "https://backend.dealdrivetechnology.com/api/"
 });
 
 axiosClient.interceptors.request.use((config) => {
